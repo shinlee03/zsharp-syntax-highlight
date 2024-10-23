@@ -8,6 +8,6 @@ Current Version: 0.0.2
 
 (0.0.1) Basic highlighting functinonality, with a few missing features.
 
-(0.0.2)
+(0.1.0)
 - Added support for macros, more keywords, reorder priority, operators, comment blocks, arrays, etc. 
 - Added demo files

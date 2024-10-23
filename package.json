@@ -2,7 +2,7 @@
   "name": "zsharp-syntax-highlight",
   "displayName": "zsharp-syntax",
   "description": "syntax highlighting for zsharp, a circ frontend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "engines": {
     "vscode": "^1.94.0"
   },

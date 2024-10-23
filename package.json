@@ -2,7 +2,7 @@
   "name": "zsharp-syntax-highlight",
   "displayName": "zsharp-syntax",
   "description": "syntax highlighting for zsharp, a circ frontend",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.94.0"
   },
@@ -10,17 +10,26 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "zsharp",
-      "aliases": ["zsharp", "zsharp"],
-      "extensions": [".zok"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "zsharp",
-      "scopeName": "source.zok",
-      "path": "./syntaxes/zsharp.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "zsharp",
+        "aliases": [
+          "zsharp",
+          "zsharp"
+        ],
+        "extensions": [
+          ".zok"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "zsharp",
+        "scopeName": "source.zok",
+        "path": "./syntaxes/zsharp.tmLanguage.json"
+      }
+    ]
   },
   "publisher": "shinlee"
 }

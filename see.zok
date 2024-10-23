@@ -53,6 +53,7 @@ def test<N>(field[N] n) -> field:
     endfor
     return res
 
+field[3] result = test::<3>([1,2,3])
 
 // imports
 from "path/to/file" import MyLibrary as ThisLibrary
@@ -68,3 +69,6 @@ from "path/to/file" import MyLibrary as ThisLibrary
 // example
 def main(private field a, private field b) -> field:
     return a * b
+
+def test(u32 a, u32 b) -> u64:
+    return a

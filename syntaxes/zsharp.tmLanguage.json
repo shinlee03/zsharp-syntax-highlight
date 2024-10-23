@@ -197,6 +197,9 @@
 									"include": "#keywords"
 								},
 								{
+									"include": "#storage"
+								},
+								{
 									"include": "#variable"
 								}
 							]

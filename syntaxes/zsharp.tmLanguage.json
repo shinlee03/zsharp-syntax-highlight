@@ -6,14 +6,14 @@
 			"include": "#comments"
 		},
 		{
+			"include": "#entity"
+		},
+		{
 			"include": "#keywords"
 		},
 		{
 			"include": "#strings"
 		}, 
-		{
-			"include": "#entity"
-		},
 		{
 			"include": "#constant"
 		},
@@ -35,12 +35,35 @@
 			"patterns": [
 				{
 					"name": "keyword.control.zsharp",
-					"match": "\\b(if|then|else|while|for|endfor|return|in|do|fi)\\b"
+					"match": "\\b(if|then|else|while|for|endfor|return|in|do)\\b"
 				},
 				{
 					"name": "keyword.control.imports.zsharp",
-					"match": "\\b(from|import)\\b"
+					"match": "\\b(from|import|as)\\b"
 				}, 
+				{
+					"match": "\\s*(#\\s*pragma)\\s*([^\\s]*)\\s*([^\\s]*)\\s*",
+					"captures": {
+						"1": {
+							"name": "keyword.control.macros.zsharp"
+						},
+						"2": {
+							"name": "keyword.other.curve.zsharp"
+						},
+						"3": {
+							"name": "entity.name.class.curve.zsharp"
+						}
+					}
+				},
+				{
+					"comment": "match 3+ char operators",
+					"match": "\\s*(\\.\\.\\.)\\s*",
+					"captures": {
+						"1": {
+							"name": "keyword.operator.zsharp"
+						}
+					}
+				},
 				{
 					"comment": "match two-char operators first",
 					"match": "\\s*(\\*\\*|>>|<<|>=|<=|\\!=|==|&&|\\|\\||\\.\\.|->)\\s*",
@@ -61,7 +84,7 @@
 				},
 				{
 					"name": "keyword.other.zsharp",
-					"match": "\\b(struct|type|mut|unsafe|witness|const|private)\\b"
+					"match": "\\b(type|struct|mut|unsafe|witness|const|private)\\b"
 				}
 
 			]
@@ -82,8 +105,17 @@
 			]
 		}, 
 		"comments": {
-			"name": "comment.line.double-slash.zsharp",
-			"match": "\\/\\/[^\\n]*"
+			"patterns": [
+				{
+					"name": "comment.line.double-slash.zsharp",
+					"match": "\\s*\\/\\/.*"
+				},
+				{
+					"name": "comment.block.zsharp",
+					"begin": "/\\*",
+					"end": "\\*/"
+				}
+			]
 		},
 		"entity": {
 			"patterns": [
@@ -187,8 +219,7 @@
 						"3": {
 							"patterns": [
 								{
-									"match": "\\s*([a-zA-Z0-9_]+)\\s*(,)?\\s*",
-									"name": "entity.name.class"
+									"include": "#generics"
 								}
 							]
 						},
@@ -202,13 +233,65 @@
 					"match": "\\s*(type)\\s*([a-zA-Z_']+[a-zA-Z0-9_']*)\\s*(=)\\s*([a-zA-Z_']+[a-zA-Z0-9']*)",
 					"captures": {
 						"1": {
-							"name": "keyword.operator.zsharp"
+							"name": "keyword.other.zsharp"
 						},
 						"2": {
-							"name": "storage.type"
+							"name": "entity.name.class"
 						},
 						"3": {
-							"name": "storage.type"
+							"name": "keyword.operator.zsharp"
+						},
+						"4": {
+							"name": "entity.name.class"
+						}
+					}
+				},
+				{
+					"comment": "match array inits",
+					"match": "\\s*(\\[)([^;]*)(;)\\s*([^\\[]*)(\\])\\s*",
+					"captures": {
+						"1": {
+							"name": "punctuation.brackets.square.zsharp"
+						},
+						"2": {
+							"patterns": [
+								{"include": "#variable"}
+							]
+						},
+						"3": {
+							"name": "punctuation.semicolon.zsharp"
+						},
+						"4": {
+							"patterns": [{"include": "#variable"}]
+						},
+						"5": {
+							"name": "punctuation.brackets.square.zsharp"
+						}
+					}
+				},
+				{
+					"comment": "match structs",
+					"match": "\\s*(struct)\\s*([^\\s^<]*)\\s*(<)?\\s*([^>]*)?\\s*(>)?\\s*({)\\s*",
+					"captures": {
+						"1": {
+							"name": "keyword.other.zsharp"
+						},
+						"2": {
+							"name": "entity.name.class"
+						},
+						"3": {
+							"name": "punctuation.brackets.angular.zsharp"
+						},
+						"4": {
+							"patterns": [
+								{"include": "#generics"}
+							]
+						},
+						"5": {
+							"name": "punctuation.brackets.angular.zsharp"
+						},
+						"6": {
+							"name": "punctuation.brackets.curly.zsharp"
 						}
 					}
 				}
@@ -237,10 +320,19 @@
 		"variable": {
 			"patterns": [
 				{
-					"match": "\\b([a-zA-Z0-9_]+)\\b",
+					"match": "\\b([a-zA-Z_]+[a-zA-Z0-9_']*)\\b",
 					"captures": {
 						"1": {
 							"name": "variable.name.zsharp"
+						}
+					}
+				}, 
+				{
+					"comment": "match numeric literals", 
+					"match": "\\b([0-9]+[^\\s]*)\\b",
+					"captures": {
+						"1": {
+							"name": "constant.numeric.zsharp"
 						}
 					}
 				}
@@ -274,6 +366,10 @@
 					"name": "invalid.illegal"
 				}
 			]
+		},
+		"generics": {
+			"match": "\\s*([a-zA-Z0-9_]+)\\s*(,)?\\s*",
+			"name": "entity.name.class"
 		}
 	},
 	"scopeName": "source.zok"

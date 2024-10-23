@@ -1,0 +1,70 @@
+// variables & types
+field a = 0
+u8 b = 1
+u16 c = 2
+u32 d = 3
+u64 e = 4
+
+field[3] mut arr = [1, 2, 3]
+u64[8] mut arr2 = [8u64; d]
+
+field[5][5] mut t arr3 = [[1, 2, 3], [4, 5, 6]]
+field[4] mut arr4 = [...arr, 5]
+
+(field, bool) mut tuple = (3, true)
+tuple.0 = 4
+
+struct pair {
+    field first
+    field second
+}
+
+struct pair<N, M> {
+    field[N] first
+    field[M] second
+}
+
+type t = field
+
+// keywords
+return true
+false
+
+const A = B
+
+// functions
+def main() -> pair<1, 2>:
+    return pair{first: [1], second: [1, 2]}
+
+// control flow
+field a = b ? 1 : 2
+field c = if true {2} else {3}
+
+for u32 i in 0..4 do
+    u32 j = i
+endfor
+
+// more generics
+
+def test<N>(field[N] n) -> field:
+    field mut res = 0
+    for u32 i in 0..N do 
+        res = res + n[i]
+    endfor
+    return res
+
+
+// imports
+from "path/to/file" import MyLibrary as ThisLibrary
+
+/* 
+* multiline comments 
+* pretty cool
+*/
+
+// only supported macro
+#pragma curve curve
+
+// example
+def main(private field a, private field b) -> field:
+    return a * b

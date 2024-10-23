@@ -2,10 +2,12 @@
 
 All notable changes to the "zsharp-lang" extension will be documented in this file.
 
-## [Unreleased]
-
-- Initial release
+Current Version: 0.0.2
 
 ### Added
 
-Basic highlighting functinonality, with a few missing features.
+(0.0.1) Basic highlighting functinonality, with a few missing features.
+
+(0.0.2)
+- Added support for macros, more keywords, reorder priority, operators, comment blocks, arrays, etc. 
+- Added demo files

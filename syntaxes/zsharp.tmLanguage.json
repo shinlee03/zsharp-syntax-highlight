@@ -1,0 +1,280 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "zsharp",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		}, 
+		{
+			"include": "#entity"
+		},
+		{
+			"include": "#constant"
+		},
+		{
+			"include": "#storage"
+		},
+		{
+			"include": "#variable"
+		}, 
+		{
+			"include" : "#slice"
+		},
+		{
+			"include": "#invalid"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.zsharp",
+					"match": "\\b(if|then|else|while|for|endfor|return|in|do|fi)\\b"
+				},
+				{
+					"name": "keyword.control.imports.zsharp",
+					"match": "\\b(from|import)\\b"
+				}, 
+				{
+					"comment": "match two-char operators first",
+					"match": "\\s*(\\*\\*|>>|<<|>=|<=|\\!=|==|&&|\\|\\||\\.\\.|->)\\s*",
+					"captures": {
+						"1": {
+							"name": "keyword.operator.zsharp"
+						}
+					}	
+				},
+				{
+					"comment": "match 1-char operators",
+					"match": "\\s*(=|:|\\.|\\!|\\+|\\-|\\*|\\/|%|&|\\||\\^|\\?)\\s*",
+					"captures": {
+						"1": {
+							"name": "keyword.operator.zsharp"
+						}
+					}
+				},
+				{
+					"name": "keyword.other.zsharp",
+					"match": "\\b(struct|type|mut|unsafe|witness|const|private)\\b"
+				}
+
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.zsharp",
+			"begin": "\\s*\"",
+			"end": "\"\\s*",
+			"patterns": [
+				{
+					"name": "constant.character.escape.zsharp",
+					"match": "\\\\."
+				},
+				{
+					"name": "string.quoted.double.zsharp",
+					"match": "."
+				}
+			]
+		}, 
+		"comments": {
+			"name": "comment.line.double-slash.zsharp",
+			"match": "\\/\\/[^\\n]*"
+		},
+		"entity": {
+			"patterns": [
+				{
+					"comment": "Capture functions",
+					"match": "\\s*(def)\\s*([a-zA-Z0-9_]+)?\\s*(::)?\\s*(<[^>]*>)?\\s*(\\()([^\\)]*)(\\))?\\s*",
+					"captures": {
+						"1": {
+							"name": "keyword.other.zsharp"
+						},
+						"2" : {
+							"name": "entity.name.function"
+						},
+						"3": {
+							"name": "keyword.operator.zsharp"
+						},
+						"4": {
+							"patterns": [
+								{
+									"match": "\\s*(<)\\s*([^>]*)\\s*(>)\\s*",
+									"captures": {
+										"1": {
+											"name": "punctuation.parenthesis.zsharp"
+										},
+										"2": {
+											"patterns": [
+												{
+													"match": "\\s*([a-zA-Z_']+[a-zA-Z0-9_']*)\\s*(,)?\\s*",
+													"captures": {
+														"1": {
+															"name": "entity.name.class"
+														},
+														"2": {
+															"name": "punctuation.comma.zsharp"
+														}
+													}
+												}
+											]
+										},
+										"3": {
+											"name": "punctuation.parenthesis.zsharp"
+										}
+									}
+								}
+							]
+						},
+						"5": {
+							"name": "punctuation.parenthesis.zsharp"
+						},
+						"6": {
+							"patterns": [
+								{
+									"match": "\\s*(<)\\s*([^>]*)\\s*(>)\\s*",
+									"captures": {
+										"1": {
+											"name": "punctuation.parenthesis.zsharp"
+										},
+										"2": {
+											"patterns": [
+												{
+													"match": "\\s*([a-zA-Z_']+[a-zA-Z0-9_']*)\\s*(,)?\\s*",
+													"captures": {
+														"1": {
+															"name": "entity.name.class"
+														},
+														"2": {
+															"name": "punctuation.comma.zsharp"
+														}
+													}
+												}
+											]
+										},
+										"3": {
+											"name": "punctuation.parenthesis.zsharp"
+										}
+									}
+								},
+								{
+									"include": "#keywords"
+								},
+								{
+									"include": "#variable"
+								}
+							]
+						},
+						"7": {
+							"name": "punctuation.parenthesis.zsharp"
+						}
+					}
+				}, 
+				{
+					"comment": "Match parametrized types. Maybe move to store?",
+					"match": "\\s*([a-zA-Z0-9_]+)\\s*(<)([^>]*)(>)",
+					"captures": {
+						"1": {
+							"name": "storage.type.zsharp"
+						},
+						"2": {
+							"name": "punctuation.brackets.angular.zsharp"
+						},
+						"3": {
+							"patterns": [
+								{
+									"match": "\\s*([a-zA-Z0-9_]+)\\s*(,)?\\s*",
+									"name": "entity.name.class"
+								}
+							]
+						},
+						"4": {
+							"name": "punctuation.brackets.angular.zsharp"
+						}
+					}
+				},
+				{
+					"comment": "match type alias",
+					"match": "\\s*(type)\\s*([a-zA-Z_']+[a-zA-Z0-9_']*)\\s*(=)\\s*([a-zA-Z_']+[a-zA-Z0-9']*)",
+					"captures": {
+						"1": {
+							"name": "keyword.operator.zsharp"
+						},
+						"2": {
+							"name": "storage.type"
+						},
+						"3": {
+							"name": "storage.type"
+						}
+					}
+				}
+			]
+		},
+		"constant": {
+			"patterns": [
+				{
+					"name": "constant.language.zsharp",
+					"match": "(true|false)"
+				}
+			]
+		},
+		"storage": {
+			"patterns": [
+				{
+					"name": "storage.type.native.zsharp",
+					"match": "(bool|field|u8|u16|u32|u64)"
+				},
+				{
+					"name": "storage.modifier.native.zsharp",
+					"match": "\\b(private)\\b"
+				}
+			]
+		},
+		"variable": {
+			"patterns": [
+				{
+					"match": "\\b([a-zA-Z0-9_]+)\\b",
+					"captures": {
+						"1": {
+							"name": "variable.name.zsharp"
+						}
+					}
+				}
+			]
+		},
+		"slice" : {
+			"patterns": [
+				{
+					"begin": "(<)(\\[)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.brackets.angle.zsharp"
+						},
+						"2": {
+							"name": "punctuation.brackets.square.zsharp"
+						}
+					},
+					"end": ">",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.brackets.angle.zsharp"
+						}
+					}
+				}
+			]
+		},
+		"invalid": {
+			"patterns": [
+				{
+					"match": ";",
+					"name": "invalid.illegal"
+				}
+			]
+		}
+	},
+	"scopeName": "source.zok"
+}

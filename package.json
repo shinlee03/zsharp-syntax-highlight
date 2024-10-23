@@ -1,0 +1,25 @@
+{
+  "name": "zsharp-lang",
+  "displayName": "zsharp lang",
+  "description": "syntax highlighting for zsharp",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "zsharp",
+      "aliases": ["zsharp", "zsharp"],
+      "extensions": [".zok"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "zsharp",
+      "scopeName": "source.zok",
+      "path": "./syntaxes/zsharp.tmLanguage.json"
+    }]
+  }
+}
